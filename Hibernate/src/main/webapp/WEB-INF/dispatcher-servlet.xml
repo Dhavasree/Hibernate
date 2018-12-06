@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+ <mvc:annotation-driven />
+<context:component-scan base-package="com.cg"></context:component-scan> 
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<property name="prefix" value="/WEB-INF/jsp/"></property>
+<property name="suffix" value=".jsp"></property>
+</bean>
+<bean id="statusDao" class="com.cg.dao.StatusDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="statusService" class="com.cg.service.StatusService">
+		<property name="statusDao" ref="statusDao"></property>
+	</bean>
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/~/test" />
+		<property name="user" value="sa" />
+		<property name="password" value="" />
+	
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="packagesToScan" value="com.cg.bean" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- <prop key="hibernate.jdbc.lob.non_contextual_creation">true</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="myTransactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="myTransactionManager" />
+</beans> 
+ 
