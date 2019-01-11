@@ -18,16 +18,56 @@ padding: 8px;
 }
 </style>
 </head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var text=new Array();
+		text=$('#hid').val();
+		
+		alert(text);
+		var op = text.filter(function (e) {
+			  return e.name;
+			});
+		alert(op);
+		document.getElementById("drop").value=text;
+		$("#pass").submit(function(e)
+				{
+			
+			 /* text = $('#name').find('option:selected').val(); */
+			
+			
+				});
+	});
+	</script>
 <body>
-<form>
+<form:form id="pass" modelAttribute="list" action="list">
 <h1>Customer List</h1>
-<table border="1" id="table">
+<input type="hidden" id="hid" value='${list}'>
+<select name="name" id="drop"></select>
+
+<%-- Name:
+<select name="name" id="name">
+<c:forEach var="cust" items="${list}"> 
+ <option value="${cust.id}">${cust.name}</option>
+</c:forEach>
+</select> --%>
+<%-- ID:
+<select name="id" id="id">
+<c:forEach var="cust" items="${list}"> 
+ <option value="${cust.id}">${cust.id}</option>
+</c:forEach>
+</select> --%>
+<input type="submit" value="submit" >
+<%-- <table border="1" id="table">
 <tr><th>Name</th><th>ID</th></tr>
  <c:forEach var="cust" items="${list}"> 
  <tr><td>${cust.name}</td><td>${cust.id}</td>
  </tr>
  </c:forEach> 
-</table>
-</form>
+</table> --%>
+</form:form>
 </body>
 </html>
