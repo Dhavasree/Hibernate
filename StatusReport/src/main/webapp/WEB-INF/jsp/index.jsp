@@ -42,6 +42,7 @@ $(document).ready(function() {
 			if(date.getDay()==5)
 				{
 				return[true];
+				
 				}
 			return [false];
 		}
@@ -55,9 +56,9 @@ $(document).ready(function() {
 <form id="status" action="value" method="post">
 	<h1 align="center">Weekly Status Report</h1>
 	<table id="statusTable" >
-				<tr><td><Strong>User Name :</Strong></td>
+				<tr><td><Strong>User Name</Strong></td>
 				<td><input type="text" name="userName" class="form-group" id="userName" required/></td></tr>
-				<tr><td><Strong>Report Date :</Strong></td>
+				<tr><td><Strong>Status Report</Strong></td>
 				<td><input type="text" name="statusReport" class="form-group" id="statusReport" required/></td></tr>
 			<tr><td></td><td><input type="submit" id="statusBtn" class="btn btn-success" value="submit"></td></tr>
 			</table>

@@ -39,12 +39,21 @@ $(document).ready(function() {
 		 $("#nextWeekStatus").attr("readonly", true);
 		 $("#issueNote").attr("readonly", true);
 		 addFunction();
-		 
 	}); 
 function startTime() {
-    var today1 = moment().format('DD/MM/YYYY HH:mm:ss');
-    document.getElementById('timeStamp').value = today1;
-  t = setTimeout(startTime, 500); 
+    var today = new Date();
+    var today1 = moment().format('DD/MM/YYYY');
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('timeStamp').value =today1+" " + h + ":" + m + ":" + s;
+    t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};
+    return i;
 }
 function addFunction()
 {
@@ -53,10 +62,8 @@ $.ajax({
 	url : 'add',
 	data : $('form[name="statusTable"]').serialize(),
 	success : function(response) {
-		if (response.validated) {
+		if (response.validated) {	
 			$('#resultContainer').show();
-			 var col=response.timeStamp;
-			 var d=new Date(col);
 			$("#table").show();
 		}
 		else
@@ -69,34 +76,36 @@ $.ajax({
 });
 </script>
 </head>
-<body>
+<body >
 <div id="resultContainer" style="display: none;">
-				<h4 style="color: green;">Successfully Stored in Database</h4>
-			</div>	
-			<div align="center">
+
+				<h4 style="color: green;">Successfully Stored in database</h4>
+				</div>	
+				<div align="center">		
 <div class="span6">	
- <a href="index" id="table" style="display: none;">Home</a> 
+<a href="index" id="table" style="display: none;">Home</a> 
 <form id="status1" class="form-signin" name="statusTable">
 	<h1 align="center">Weekly status Report</h1>
 		 <table id="statusTable" >
-				<tr><td><Strong>User Name :</Strong></td>
+				<tr><td><Strong>User Name</Strong></td>
 				<td><input type="text" name="userName" class="form-group" id="userName" value="${userName}" readonly/></td></tr>
-				<tr><td><Strong>Report Date :</Strong></td>
+				<tr><td><Strong>Report Date</Strong></td>
 				<td><input type="text" name="statusReport" class="form-group" id="statusReport" value="${statusReport}" readonly/></td></tr>
-				<tr><td><Strong>Current Week Status :</Strong></td> 
+				<tr><td><Strong>Current Week Status</Strong></td> 
 				<td><textarea name="currentWeekStatus" class="form-group" id="currentWeekStatus" rows="5" cols="60" required></textarea></td></tr>
-				<tr><td><Strong>Next Week Status :</Strong></td>
+				<tr><td><Strong>Next Week Status</Strong></td>
 				<td><textarea name="nextWeekStatus" class="form-group" id="nextWeekStatus" rows="5" cols="60" required></textarea></td></tr>
-                <tr><td><Strong>Issue Note :</Strong></td>
+                <tr><td><Strong>Issue Note</Strong></td>
 				<td><textarea name="issueNote" class="form-group" id="issueNote" rows="5" cols="60" required/></textarea></td></tr>
-		         <tr><td><Strong>Date and Time of Submission :</Strong></td>
+		         <tr><td><Strong>Date and Time of Submission</Strong></td>
 				<td><input type="datetime" name="timeStamp" class="form-group" id="timeStamp" readonly/></td></tr>
 		        <tr><td></td><td><input type="submit" id="statusBtn" class="btn btn-success" value="submit"></td></tr>
 </table> 
 			</form>
+			</div>
+			</div>
 			
-			</div>
-			</div>
-				
+			
+			
 </body>
 </html>
